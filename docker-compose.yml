@@ -1,0 +1,28 @@
+version: '3.2'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - PORT=3333
+      - DB_USER=todos
+      - DB_PASS=todos
+      - DB_NAME=todos
+      - DB_HOST=database
+    links:
+      - 'database:database'
+    ports:
+      - '8000:3333'
+  database:
+    image: postgres:11
+    environment:
+      - POSTGRES_USER=todos
+      - POSTGRES_PASSWORD=todos
+      - POSTGRES_DB=todos
+    ports:
+      - '5432:5432'
